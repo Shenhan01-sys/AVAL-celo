@@ -1,0 +1,14 @@
+{
+  "name": "aval-celo-ops",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "AVAL Celo ops — autonomous AgentBeacon heartbeat loop",
+  "scripts": {
+    "heartbeat": "node heartbeat.mjs"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "viem": "^2.21.55"
+  }
+}
