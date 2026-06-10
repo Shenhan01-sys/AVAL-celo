@@ -9,12 +9,13 @@ This repo is the **Celo (EVM / Solidity)** port. The contracts mirror the Casper
 re-expressed with OpenZeppelin and an ERC-8004 (agent reputation) + ERC-8183 (job lifecycle)
 flavor. Built with **Foundry**.
 
-## Layout
+## Layout (monorepo)
 ```
-src/        Solidity contracts
-test/       Foundry tests
-script/     deploy + ops scripts
-lib/        dependencies (forge-std, openzeppelin-contracts)
+contracts/  Foundry project — src/, test/, script/, lib/, Makefile, deployments/
+ops/        autonomous loops — heartbeat (tx frequency) + journal (commit frequency)
+web/        Next.js frontend (Celo port of the AVAL app)
+agent/      FastAPI AI verifier (Celo port)
+docs/       architecture notes
 ```
 
 ## Contracts (planned)
@@ -29,12 +30,14 @@ lib/        dependencies (forge-std, openzeppelin-contracts)
 
 ## Build & test
 ```bash
+cd contracts
 forge build
 forge test
 ```
 
 ## Deploy (testnet first)
 ```bash
+cd contracts
 cp .env.example .env   # fill PRIVATE_KEY (deployer), CELOSCAN_API_KEY
 forge script script/Deploy.s.sol --rpc-url alfajores --broadcast --verify
 ```
