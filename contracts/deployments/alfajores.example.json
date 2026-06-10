@@ -1,0 +1,14 @@
+{
+  "network": "alfajores",
+  "chainId": 44787,
+  "contracts": {
+    "MockUSD": "0x",
+    "InvoiceRegistry": "0x",
+    "ReputationOracle": "0x",
+    "FinancingToken": "0x",
+    "FundingPool": "0x",
+    "AgentBeacon": "0x"
+  },
+  "agent": "0x",
+  "treasury": "0x"
+}

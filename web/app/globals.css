@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { --ink: #0b0b0a; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: #f1eee5;
+  color: #0b0b0a;
+  font-family: var(--font-hanken), sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: #bff205; color: #0b0b0a; }
+
+.display { font-family: var(--font-anton), sans-serif; letter-spacing: 0.01em; }
+.mono { font-family: var(--font-mono), monospace; }
+
+/* hand-drawn dotted paper texture, very subtle */
+.dotgrid {
+  background-image: radial-gradient(#0b0b0a 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity: 0.05;
+}
+
+/* ---- marquee ---- */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-track { display: flex; width: max-content; animation: marquee 26s linear infinite; }
+.marquee-rev { animation-direction: reverse; }
+
+/* ---- kinetic intro ---- */
+@keyframes slamIn { 0% { opacity: 0; transform: translateY(46px) scale(.94); } 62% { opacity: 1; transform: translateY(-7px) scale(1.015); } 100% { opacity: 1; transform: none; } }
+.slam { animation: slamIn .9s cubic-bezier(.2,1.1,.3,1) both; }
+
+/* ---- step scene motifs (light/bold) ---- */
+@keyframes scanY { 0% { top: 8%; opacity: 0; } 12% { opacity: 1; } 50% { top: 84%; opacity: 1; } 64%, 100% { top: 84%; opacity: 0; } }
+@keyframes popChk { 0%, 30% { opacity: 0; transform: scale(0); } 42% { opacity: 1; transform: scale(1.25); } 52%, 88% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(.7); } }
+@keyframes coinShoot { 0% { opacity: 0; transform: translate(0,0) scale(.6); } 12% { opacity: 1; transform: translate(0,0) scale(1); } 60% { opacity: 1; transform: translate(var(--cx,40px), var(--cy,-40px)) scale(.8); } 70%, 100% { opacity: 0; transform: translate(var(--cx,40px), var(--cy,-40px)) scale(.6); } }
+@keyframes fillUp { 0%, 14% { height: 0%; } 60%, 100% { height: var(--fh, 70%); } }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+
+/* ---- live tape · machine-to-machine money flow ---- */
+.flow-token { position: absolute; top: 50%; left: 2px; animation: flowTravel 2.8s cubic-bezier(.4,0,.2,1) infinite; }
+@keyframes flowTravel {
+  0% { left: 2px; opacity: 0; transform: translateY(-50%) scale(.55); }
+  12% { opacity: 1; transform: translateY(-50%) scale(1); }
+  76% { left: calc(100% - 36px); opacity: 1; transform: translateY(-50%) scale(1); }
+  90%, 100% { left: calc(100% - 36px); opacity: 0; transform: translateY(-50%) scale(.55); }
+}
+@keyframes coinPulse { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+/* marketplace · casper coin rides to each deal's maturity, continuously */
+.mcoin { position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); animation: marketRun 3s ease-in-out infinite; }
+@keyframes marketRun { 0% { left: 0; opacity: 0; } 10% { opacity: 1; } 72% { left: var(--mw, 50%); opacity: 1; } 86%, 100% { left: var(--mw, 50%); opacity: 0; } }
+
+/* value-machine knob continuous pulse */
+.vm-knob::after { content: ""; position: absolute; inset: -7px; border: 2px solid #0b0b0a; pointer-events: none; animation: knobPulse 1.8s ease-out infinite; }
+@keyframes knobPulse { 0% { transform: scale(.7); opacity: .6; } 75%, 100% { transform: scale(1.5); opacity: 0; } }
+
+/* value-machine · csprUSD pulled from the future invoice back to today */
+.vflow { position: absolute; top: 50%; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #0b0b0a; object-fit: cover; transform: translateY(-50%); }
+.vflow1 { animation: valueFlow 2.6s linear infinite; }
+.vflow2 { animation: valueFlow 2.6s linear infinite .85s; }
+.vflow3 { animation: valueFlow 2.6s linear infinite 1.7s; }
+@keyframes valueFlow { 0% { left: calc(100% - 52px); opacity: 0; } 12% { opacity: 1; } 84% { left: 4px; opacity: 1; } 94%, 100% { left: 4px; opacity: 0; } }
+
+/* trust · stake & slash */
+.slash-mark { position: absolute; top: 50%; left: -12%; width: 124%; height: 4px; background: #ff5a1f; transform: translateY(-50%) rotate(-45deg) scaleX(0); transform-origin: center; pointer-events: none; animation: slashSweep 3.4s ease-in-out infinite; }
+@keyframes slashSweep { 0%, 32% { transform: translateY(-50%) rotate(-45deg) scaleX(0); opacity: 0; } 42% { opacity: 1; } 52% { transform: translateY(-50%) rotate(-45deg) scaleX(1); opacity: 1; } 74% { opacity: 1; } 84%, 100% { transform: translateY(-50%) rotate(-45deg) scaleX(1); opacity: 0; } }
+.stake-coin.slash img { animation: slashShake 3.4s ease-in-out infinite; }
+@keyframes slashShake { 0%, 40% { filter: none; transform: translateX(0); } 47% { transform: translateX(-2px); } 52% { filter: grayscale(.55) brightness(.72); transform: translateX(2px); } 58% { transform: translateX(-2px); } 64%, 100% { filter: none; transform: translateX(0); } }
+.slash-tag { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: #ff5a1f; color: #fff; padding: 1px 5px; white-space: nowrap; opacity: 0; animation: slashTag 3.4s ease-in-out infinite; }
+@keyframes slashTag { 0%, 48% { opacity: 0; transform: translateX(-50%) translateY(4px); } 56% { opacity: 1; transform: translateX(-50%) translateY(0); } 76% { opacity: 1; } 84%, 100% { opacity: 0; } }
+
+/* immersive video · slow drift */
+.vidzoom { animation: vidZoom 20s ease-in-out infinite alternate; }
+@keyframes vidZoom { from { transform: scale(1); } to { transform: scale(1.08); } }
+
+/* token convergence · any token → csprUSD */
+.token-bob { animation: tokenBob 2.8s ease-in-out infinite; }
+@keyframes tokenBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+/* onboarding loader · coin rain */
+.ldr-coin { position: absolute; top: -70px; animation-name: ldrRain; animation-timing-function: linear; animation-iteration-count: infinite; will-change: transform; }
+@keyframes ldrRain { 0% { transform: translateY(-80px) rotate(0deg); opacity: 0; } 8% { opacity: 1; } 88% { opacity: 1; } 100% { transform: translateY(108vh) rotate(220deg); opacity: 0; } }
+
+/* ---- agent core hub (live activity, no cards) ---- */
+.hub-stage { position: relative; width: 640px; height: 480px; margin: 0 auto; max-width: 100%; }
+@media (max-width: 680px) { .hub-stage { transform: scale(.5); transform-origin: top center; height: 250px; } }
+.hub-link { fill: none; stroke: #0b0b0a; stroke-width: 2; stroke-dasharray: 5 7; animation: dashFlow 1s linear infinite; }
+@keyframes dashFlow { to { stroke-dashoffset: -24; } }
+.hub-node { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 3; }
+.hub-ring { position: absolute; top: 0; left: 50%; width: 66px; height: 66px; border-radius: 50%; border: 2px solid #BFF205; transform: translateX(-50%); opacity: 0; animation: nodePing 3s ease-out infinite; pointer-events: none; }
+@keyframes nodePing { 0% { transform: translateX(-50%) scale(1); opacity: .9; } 70%, 100% { transform: translateX(-50%) scale(1.55); opacity: 0; } }
+.hub-coin { position: absolute; top: -18px; left: -18px; width: 36px; height: 36px; z-index: 6; will-change: transform; }
+@keyframes coinRun { 0% { offset-distance: 0%; opacity: 0; } 10% { opacity: 1; } 78% { offset-distance: 100%; opacity: 1; } 90%, 100% { offset-distance: 100%; opacity: 0; } }
+.hub-core { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 5; }
+.hub-corering { position: absolute; top: 50%; left: 50%; width: 124px; height: 124px; border-radius: 26px; border: 2px solid #0b0b0a; transform: translate(-50%, -50%); opacity: .22; animation: corePulse 3s ease-in-out infinite; pointer-events: none; }
+.hub-corering.r2 { width: 156px; height: 156px; animation-delay: 1.3s; }
+@keyframes corePulse { 0%, 100% { transform: translate(-50%, -50%) scale(.92); opacity: .26; } 50% { transform: translate(-50%, -50%) scale(1.06); opacity: .06; } }
+.hub-live { position: absolute; top: -32px; left: 50%; transform: translateX(-50%); z-index: 11; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .12em; background: #BFF205; color: #0b0b0a; border: 2px solid #0b0b0a; padding: 2px 8px; white-space: nowrap; }
+.hub-corelabel { position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); z-index: 11; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .12em; background: #0b0b0a; color: #f1eee5; padding: 3px 9px; white-space: nowrap; }
+
+/* (reduced-motion override removed — it was freezing every animation when the
+   OS "reduce motion" setting is on; this is an animation-forward demo.) */
+
+/* ---- marketplace · cash-flow horizon ("the book") ---- */
+@keyframes mktFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes mktFlow { to { stroke-dashoffset: -28; } }
+@keyframes todayPing { 0% { transform: translate(-50%, -50%) scale(1); opacity: .5; } 70%, 100% { transform: translate(-50%, -50%) scale(2.6); opacity: 0; } }
+.mkt-flow { fill: none; stroke: #0b0b0a; stroke-width: 2; stroke-dasharray: 4 6; opacity: .28; animation: mktFlow 1s linear infinite; }
+
+/* ---- payment stream (fund flow) ---- */
+@keyframes payStream { 0% { left: -2%; opacity: 0; } 14% { opacity: 1; } 86% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+@keyframes stampPop { 0% { transform: rotate(-8deg) scale(.4); opacity: 0; } 70% { transform: rotate(-8deg) scale(1.12); opacity: 1; } 100% { transform: rotate(-8deg) scale(1); opacity: 1; } }
+@keyframes payNodePulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(191,242,5,.0); } 50% { box-shadow: 0 0 0 8px rgba(191,242,5,.18); } }
+
+/* ---- modal/overlay in-out + page transition ---- */
+@keyframes ovIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ovOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes popIn { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes popOut { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(14px) scale(.98); } }
+@keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.page-in { animation: pageIn .42s cubic-bezier(.2,1,.3,1) both; }
+
+/* ---- pools · vault heat ---- */
+@keyframes heatPulse { 0%, 100% { box-shadow: 6px 6px 0 #0b0b0a, 0 0 0 0 rgba(255,90,31,0); } 50% { box-shadow: 6px 6px 0 #0b0b0a, 0 0 0 7px rgba(255,90,31,.20); } }
+@keyframes liquid { 0%, 100% { transform: translateX(-2%); } 50% { transform: translateX(2%); } }
+@keyframes slosh { 0%, 100% { transform: translateX(-8%) skewX(-2.5deg); } 50% { transform: translateX(8%) skewX(2.5deg); } }
+@keyframes bubble { 0% { transform: translateY(0) scale(.5); opacity: 0; } 25% { opacity: .85; } 100% { transform: translateY(-150px) scale(1); opacity: 0; } }
+@keyframes columnRise { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+/* ---- branded loading screen ---- */
+@keyframes loadBar { 0% { transform: translateX(-110%); } 100% { transform: translateX(280%); } }
+@keyframes logoBob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-9px) rotate(-5deg); } }
+@keyframes loadRain { 0% { transform: translateY(-60px); opacity: 0; } 15% { opacity: .28; } 90% { opacity: .28; } 100% { transform: translateY(108vh); opacity: 0; } }
+
+/* ---- portfolio · orbit ---- */
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spinRev { to { transform: rotate(-360deg); } }
+.orbit-stage:hover .orbit-spin { animation-play-state: paused; }

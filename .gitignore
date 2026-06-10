@@ -1,11 +1,24 @@
-# Compiler files
+# Foundry build artifacts (contracts/)
 cache/
 out/
+contracts/broadcast/**/dry-run/
 
-# Ignores development broadcast logs
-!/broadcast
-/broadcast/*/31337/
-/broadcast/**/dry-run/
-
-# Dotenv file
+# Secrets — never commit
 .env
+.env.local
+*.pem
+keys/
+
+# Node
+node_modules/
+.next/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Misc
+.DS_Store
+graphify-out/
