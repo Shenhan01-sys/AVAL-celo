@@ -40,6 +40,27 @@ forge script script/Deploy.s.sol --rpc-url alfajores --broadcast --verify
 ```
 Networks: Alfajores testnet (chainId 44787) → Celo mainnet (chainId 42220).
 
+## Autonomous ops (`ops/`)
+Two loops keep AVAL alive on-chain (see `ops/.env.example`):
+```bash
+cd ops && npm install
+npm run heartbeat   # AgentBeacon.heartbeat(ref) every interval — gas-only TX frequency
+npm run journal     # appends live beacon pulse to a log + commits it — commit frequency
+```
+
+## Deployed addresses
+Recorded per network under `deployments/` after a broadcast (see `alfajores.example.json`).
+
+| Contract | Alfajores | Celo mainnet |
+|---|---|---|
+| MockUSD | `0x` | — |
+| InvoiceRegistry | `0x` | — |
+| ReputationOracle | `0x` | — |
+| FinancingToken | `0x` | — |
+| FundingPool | `0x` | — |
+| AgentBeacon | `0x` | — |
+
 ## Chains
 This is one of three AVAL deployments (Casper, Celo, BNB) sharing the same product design
-(`design.md` in the Casper repo). Only the settlement rails differ per chain.
+(`design.md` in the Casper repo). Only the settlement rails differ per chain. On BNB the agent
+layer can use the official `bnbagent-sdk` (ERC-8004 identity + ERC-8183 agentic commerce).
