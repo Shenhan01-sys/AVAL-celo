@@ -48,13 +48,12 @@ contract ReputationOracle is Ownable {
         emit Faulted(agent, ++faults[agent]);
     }
 
-    /// @notice Slash an agent's stake (e.g. proven wrong verdict). Burns to address(0).
+    /// @notice Slash an agent's stake (e.g. proven wrong verdict). The slashed native value
+    /// stays locked in the contract as a penalty pool (no external call → no reentrancy).
     function slash(address agent, uint256 amount) external onlyOwner {
         if (stakeOf[agent] < amount) revert InsufficientStake();
         stakeOf[agent] -= amount;
         emit Slashed(agent, amount);
-        (bool ok,) = payable(owner()).call{value: amount}("");
-        require(ok, "transfer failed");
     }
 
     /// @notice Verdict accuracy in basis points (10000 = 100%).
