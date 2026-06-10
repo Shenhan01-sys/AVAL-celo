@@ -7,7 +7,7 @@ import {ReputationOracle} from "../src/ReputationOracle.sol";
 contract ReputationOracleTest is Test {
     ReputationOracle oracle;
     address agent = address(0xA1);
-    address writer = address(0xW1);
+    address writer = address(0x111);
 
     function setUp() public {
         oracle = new ReputationOracle();
