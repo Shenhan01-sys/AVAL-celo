@@ -5,7 +5,8 @@
   "type": "module",
   "description": "AVAL Celo ops — autonomous AgentBeacon heartbeat loop",
   "scripts": {
-    "heartbeat": "node heartbeat.mjs"
+    "heartbeat": "node heartbeat.mjs",
+    "journal": "node journal.mjs"
   },
   "dependencies": {
     "dotenv": "^16.4.7",
